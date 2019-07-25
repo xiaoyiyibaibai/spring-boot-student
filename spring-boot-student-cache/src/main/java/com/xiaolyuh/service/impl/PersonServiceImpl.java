@@ -10,6 +10,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PersonServiceImpl implements PersonService {
@@ -34,17 +35,17 @@ public class PersonServiceImpl implements PersonService {
     @Override
     @Cacheable(value = "people", key = "#person.id")//3
     public Person findOne(Person person) {
-        Person p = personRepository.findOne(person.getId());
-        System.out.println("为id、key为:" + p.getId() + "数据做了缓存");
-        return p;
+        Optional<Person>  p = personRepository.findById(person.getId());
+        System.out.println("为id、key为:" + person.getId() + "数据做了缓存");
+        return p.get();
     }
 
     @Override
     @Cacheable(value = "people", key = "#id")//3
     public Person findById(Long id) {
-        Person p = personRepository.findOne(id);
-        System.out.println("为id、key为:" + p.getId() + "数据做了缓存");
-        return p;
+        Optional<Person> p = personRepository.findById(id);
+        System.out.println("为id、key为:" + id + "数据做了缓存");
+        return p.get();
     }
 
     @Override

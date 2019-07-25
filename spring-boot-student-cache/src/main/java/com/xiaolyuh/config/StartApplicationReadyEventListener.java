@@ -18,10 +18,10 @@ import java.util.List;
  * @Date 2019/7/25 15:57
  **/
 @Component
-public class StartApplicationreadyEventListener implements ApplicationListener<ApplicationReadyEvent>, ApplicationContextAware {
+public class StartApplicationReadyEventListener implements ApplicationListener<ApplicationReadyEvent>, ApplicationContextAware {
     private ApplicationContext applicationContext;
     private PersonService personService;
-    public StartApplicationreadyEventListener(PersonService personService){
+    public StartApplicationReadyEventListener(PersonService personService){
         this.personService = personService;
     }
 

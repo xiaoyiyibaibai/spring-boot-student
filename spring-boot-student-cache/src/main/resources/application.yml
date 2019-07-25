@@ -1,0 +1,34 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:ssb_test
+    platform: h2
+    username: root
+    password: root
+    driverClassName: org.h2.Driver
+    schema: classpath:db/schema.sql
+    data: classpath:db/data.sql
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: true
+        use_sql_comments: true
+        format_sql: true
+    show-sql: true
+  h2:
+    console:
+      enabled: true
+      path: /console
+      settings:
+        trace: false
+        web-allow-others: false
+  redis:
+    database: 0
+logging:
+  level: debug
+  com.xiaolyuh: debug
+  org.springframework.web: debug
+server:
+  port: 8077
