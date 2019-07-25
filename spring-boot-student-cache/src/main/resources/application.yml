@@ -26,9 +26,5 @@ spring:
         web-allow-others: false
   redis:
     database: 0
-logging:
-  level: debug
-  com.xiaolyuh: debug
-  org.springframework.web: debug
 server:
   port: 8077
