@@ -9,6 +9,8 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PersonServiceImpl implements PersonService {
     @Autowired
@@ -35,5 +37,19 @@ public class PersonServiceImpl implements PersonService {
         Person p = personRepository.findOne(person.getId());
         System.out.println("为id、key为:" + p.getId() + "数据做了缓存");
         return p;
+    }
+
+    @Override
+    @Cacheable(value = "people", key = "#id")//3
+    public Person findById(Long id) {
+        Person p = personRepository.findOne(id);
+        System.out.println("为id、key为:" + p.getId() + "数据做了缓存");
+        return p;
+    }
+
+    @Override
+    @Cacheable(value = "peoples")//3
+    public List<Person> findAll() {
+       return personRepository.findAll();
     }
 }
