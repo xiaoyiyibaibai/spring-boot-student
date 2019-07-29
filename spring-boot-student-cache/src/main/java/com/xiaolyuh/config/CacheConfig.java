@@ -14,15 +14,19 @@ import com.xiaolyuh.entity.Person;
 import org.springframework.cache.CacheManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.data.redis.cache.RedisCacheConfiguration;
 import org.springframework.data.redis.cache.RedisCacheManager;
 import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
+import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.http.codec.json.Jackson2JsonDecoder;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.util.LinkedHashSet;
+import java.util.List;
 
 /**
  * @ClassName CacheConfig
@@ -35,7 +39,7 @@ public class CacheConfig {
 
 
     @Bean
-    public CacheManager cacheManager(RedisConnectionFactory factory, ObjectMapper objectMapper) {
+    public RedisCacheManager cacheManager(RedisConnectionFactory factory, ObjectMapper objectMapper) {
         Jackson2JsonRedisSerializer jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer( Object.class );
         jackson2JsonRedisSerializer.setObjectMapper( objectMapper );
         SimpleModule simpleModule = new SimpleModule();
@@ -45,7 +49,6 @@ public class CacheConfig {
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig().serializeValuesWith( RedisSerializationContext.SerializationPair.fromSerializer( jackson2JsonRedisSerializer ) );
         return RedisCacheManager.builder( factory ).cacheDefaults( redisCacheConfiguration ).build();
     }
-
 
     public static class PersonJsonDeserializeMapper extends JsonDeserializer<Person> {
 
