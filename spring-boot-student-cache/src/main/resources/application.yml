@@ -25,6 +25,6 @@ spring:
         trace: false
         web-allow-others: false
   redis:
-    database: 0
+    database: 1
 server:
   port: 8077
