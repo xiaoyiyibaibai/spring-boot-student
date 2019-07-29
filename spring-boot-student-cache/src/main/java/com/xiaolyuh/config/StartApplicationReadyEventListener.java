@@ -12,6 +12,7 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.*;
@@ -28,9 +29,10 @@ public class StartApplicationReadyEventListener implements ApplicationListener<A
     private PersonService personService;
     private CacheManager cacheManager;
     private StringRedisTemplate stringRedisTemplate;
-    private ConcurrentHashMap<String, Object> concurrentHashMap = new ConcurrentHashMap<>(  );
+    private ConcurrentHashMap<String, Object> concurrentHashMap = new ConcurrentHashMap<>();
+
     @Autowired
-    public StartApplicationReadyEventListener(PersonService personService,StringRedisTemplate stringRedisTemplate){
+    public StartApplicationReadyEventListener(PersonService personService, StringRedisTemplate stringRedisTemplate) {
         this.personService = personService;
         this.stringRedisTemplate = stringRedisTemplate;
     }
@@ -43,12 +45,47 @@ public class StartApplicationReadyEventListener implements ApplicationListener<A
     @Override
     public void onApplicationEvent(ApplicationReadyEvent event) {
         //启动的时候读取缓存信息
-        doSchedule();
+        testStr();
     }
-    private void doSchedule(){
 
-        ScheduledExecutorService executor = Executors.newScheduledThreadPool( 5 );;
-        executor.scheduleAtFixedRate(()->{
+//    private void doSchedule() {
+//
+//        ScheduledExecutorService executor = Executors.newScheduledThreadPool( 5 );
+//        executor.scheduleAtFixedRate( () -> {
+//            // 清理缓存，并重新读取缓存
+//            cacheManager.getCache( "people" ).clear();
+//            cacheManager.getCache( "peoples" ).clear();
+//            try {
+//                TimeUnit.SECONDS.sleep( 300 );
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//            List<Person> personList = personService.findAll();
+//            personList.stream().forEach( person -> {
+//                System.out.println( "执行遍历project的每一个project进行处理！！" );
+//                personService.findById( person.getId() );
+//            } );
+//        }, 0, 40, TimeUnit.SECONDS );
+//
+//        //   executor.execute(  );
+//    }
+
+
+    public void testStr() {
+        ScheduledExecutorService service = Executors.newSingleThreadScheduledExecutor();
+        // 参数：1、任务体
+        //    2、首次执行的延时时间
+        //      3、任务执行间隔
+        // 4、间隔时间单
+        service.scheduleAtFixedRate( new CacheTask(), 0, 3, TimeUnit.SECONDS );
+    }
+
+    class CacheTask implements Runnable {
+        public CacheTask() {
+        }
+
+        @Override
+        public void run() {
             // 清理缓存，并重新读取缓存
             cacheManager.getCache( "people" ).clear();
             cacheManager.getCache( "peoples" ).clear();
@@ -57,13 +94,11 @@ public class StartApplicationReadyEventListener implements ApplicationListener<A
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            List<Person> personList = personService .findAll();
+            List<Person> personList = personService.findAll();
             personList.stream().forEach( person -> {
-                System.out.println("执行遍历project的每一个project进行处理！！");
+                System.out.println( "执行遍历project的每一个project进行处理！！" );
                 personService.findById( person.getId() );
             } );
-        }, 0,40, TimeUnit.SECONDS );
-
-     //   executor.execute(  );
+        }
     }
 }
