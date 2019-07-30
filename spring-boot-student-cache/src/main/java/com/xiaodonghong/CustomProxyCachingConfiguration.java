@@ -4,12 +4,15 @@ import com.xiaodonghong.CustomCacheInterceptor;
 import com.xiaodonghong.domain.CustomAnnotationCacheOperationSource;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.cache.annotation.AbstractCachingConfiguration;
+import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.config.CacheManagementConfigUtils;
 import org.springframework.cache.interceptor.BeanFactoryCacheOperationSourceAdvisor;
 import org.springframework.cache.interceptor.CacheOperationSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Role;
+import org.springframework.core.annotation.AnnotationAttributes;
+import org.springframework.core.type.AnnotationMetadata;
 
 /**
  * @ClassName CustomProxyCachingConfiguration
@@ -56,4 +59,13 @@ public class CustomProxyCachingConfiguration extends AbstractCachingConfiguratio
         return interceptor;
     }
 
+    @Override
+    public void setImportMetadata(AnnotationMetadata importMetadata) {
+        this.enableCaching = AnnotationAttributes.fromMap(
+                importMetadata.getAnnotationAttributes( CustomEnableCaching.class.getName(), false));
+        if (this.enableCaching == null) {
+            throw new IllegalArgumentException(
+                    "@EnableCaching is not present on importing class " + importMetadata.getClassName());
+        }
+    }
 }
