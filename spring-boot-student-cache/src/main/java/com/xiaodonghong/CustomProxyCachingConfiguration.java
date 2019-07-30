@@ -1,6 +1,7 @@
 package com.xiaodonghong;
 
 import com.xiaodonghong.CustomCacheInterceptor;
+import com.xiaodonghong.customcacheconfig.CustomBeanFactoryCacheOperationSourceAdvisor;
 import com.xiaodonghong.domain.CustomAnnotationCacheOperationSource;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.cache.annotation.AbstractCachingConfiguration;
@@ -14,6 +15,8 @@ import org.springframework.context.annotation.Role;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.type.AnnotationMetadata;
 
+import java.util.HashMap;
+
 /**
  * @ClassName CustomProxyCachingConfiguration
  * @Description 配置文件注入CustomCacheInterceptor類
@@ -26,14 +29,16 @@ public class CustomProxyCachingConfiguration extends AbstractCachingConfiguratio
 
     @Bean(name = CacheManagementConfigUtils.CACHE_ADVISOR_BEAN_NAME)
     @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
-    public BeanFactoryCacheOperationSourceAdvisor cacheAdvisor() {
+    public CustomBeanFactoryCacheOperationSourceAdvisor cacheAdvisor() {
         // TODO 注入拦截
-        BeanFactoryCacheOperationSourceAdvisor advisor = new BeanFactoryCacheOperationSourceAdvisor();
+        CustomBeanFactoryCacheOperationSourceAdvisor advisor = new CustomBeanFactoryCacheOperationSourceAdvisor();
         advisor.setCacheOperationSource(cacheOperationSource());
         advisor.setAdvice(cacheInterceptor());
         if (this.enableCaching != null) {
             advisor.setOrder(this.enableCaching.<Integer>getNumber("order"));
         }
+
+
         return advisor;
     }
 

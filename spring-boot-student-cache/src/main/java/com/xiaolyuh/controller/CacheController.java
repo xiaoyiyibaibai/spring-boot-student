@@ -29,6 +29,10 @@ public class CacheController {
     public Person cacheable(@PathVariable Long id) {
         return personService.findById( id );
     }
+    @RequestMapping("/find2/{id}")
+    public Person cacheable2(@PathVariable Long id) {
+        return personService.findById2( id );
+    }
 
     @RequestMapping("/all")
     public List<Person> cacheable() {
@@ -48,7 +52,11 @@ public class CacheController {
             }else {
                 id = ((Person)temp).getId();
             }
-            personList2.add(personService.findById( id));
+
+            Object person =  personService.findById( id);
+            if (person instanceof Person) {
+                personList2.add( (Person)person );
+            }
         }
         return  personList2;
     }

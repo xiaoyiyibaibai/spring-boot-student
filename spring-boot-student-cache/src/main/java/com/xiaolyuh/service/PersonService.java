@@ -13,4 +13,5 @@ public interface PersonService {
     Person findOne(Person person);
     public Person findById(Long id);
     public List<Person> findAll();
+    public Person findById2(Long id);
 }

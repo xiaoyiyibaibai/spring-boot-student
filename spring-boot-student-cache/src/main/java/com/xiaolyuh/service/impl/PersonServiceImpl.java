@@ -53,4 +53,11 @@ public class PersonServiceImpl implements PersonService {
     public List<Person> findAll() {
        return personRepository.findAll();
     }
+
+    @Override
+    public Person findById2(Long id) {
+        Optional<Person> p = personRepository.findById(id);
+        System.out.println("为id、key为:" + id + "数据做了缓存");
+        return p.get();
+    }
 }

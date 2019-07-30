@@ -7,7 +7,7 @@ import org.springframework.cache.annotation.EnableCaching;
 
 @SpringBootApplication
 // 开启缓存，需要显示的指定
-//@EnableCaching
+// @EnableCaching
 @CustomEnableCaching
 public class SpringBootStudentCacheApplication {
 

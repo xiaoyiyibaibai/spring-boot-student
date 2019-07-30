@@ -101,7 +101,9 @@ public class StartApplicationReadyEventListener implements ApplicationListener<A
         public void run() {
             synchronized (object) {
                 System.out.println( "start 我是肖東紅的定時任務執行" + new Date() );
-                this.cacheManager.getCache( "people" ).clear();
+              //  啟動做緩存
+              //  this.cacheManager.getCache( "people" ).clear();
+              //  this.cacheManager.getCache( "peoples" ).clear();
                 System.out.println( "end 我是肖東紅的定時任務執行" + new Date() );
             }
 
