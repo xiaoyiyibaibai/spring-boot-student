@@ -6,10 +6,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.reflections.Reflections;
+import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -24,6 +27,17 @@ import net.minidev.json.JSONObject;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class SpringBootStudentCacheApplicationTests {
+
+    @Test
+    public void testReflections() {
+        Reflections reflections = new Reflections();
+        Set<Class<? extends BeanFactory>> classes = reflections.getSubTypesOf(BeanFactory.class);
+
+        for(Class clazz : classes) {
+            //logger.info(clazz.getName());
+            System.out.println("Found: " + clazz.getName());
+        }
+    }
 
     @Test
     public void contextLoads() {

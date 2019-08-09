@@ -9,7 +9,6 @@ import org.springframework.cache.CacheManager;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.ApplicationListener;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
 
 import java.nio.channels.Pipe;
@@ -29,15 +28,15 @@ public class StartApplicationReadyEventListener implements ApplicationListener<A
     private ApplicationContext applicationContext;
     private PersonService personService;
     private CacheManager cacheManager;
-    private StringRedisTemplate stringRedisTemplate;
+//    private StringRedisTemplate stringRedisTemplate;
     private ConcurrentHashMap<String, Object> concurrentHashMap = new ConcurrentHashMap<>();
 
-    @Autowired
-    public StartApplicationReadyEventListener(PersonService personService, StringRedisTemplate stringRedisTemplate,CacheManager cacheManager) {
-        this.personService = personService;
-        this.stringRedisTemplate = stringRedisTemplate;
-        this.cacheManager = cacheManager;
-    }
+//    @Autowired
+//    public StartApplicationReadyEventListener(PersonService personService, StringRedisTemplate stringRedisTemplate,CacheManager cacheManager) {
+//        this.personService = personService;
+//        this.stringRedisTemplate = stringRedisTemplate;
+//        this.cacheManager = cacheManager;
+//    }
 
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
