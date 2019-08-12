@@ -23,6 +23,7 @@ import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer
 import org.springframework.data.redis.serializer.RedisSerializationContext;
 
 import java.io.IOException;
+import java.time.Duration;
 
 /**
  * @ClassName CacheConfig
@@ -43,7 +44,7 @@ public class CacheConfig {
 
         objectMapper.registerModule( simpleModule );
         RedisCacheConfiguration redisCacheConfiguration = RedisCacheConfiguration.defaultCacheConfig().serializeValuesWith( RedisSerializationContext.SerializationPair.fromSerializer( jackson2JsonRedisSerializer ) );
-        return RedisCacheManager.builder( factory ).cacheDefaults( redisCacheConfiguration ).build();
+        return RedisCacheManager.builder( factory ).cacheDefaults( redisCacheConfiguration.entryTtl( Duration.ofHours( 1 ) ) ).build();
     }
 
     public static class PersonJsonDeserializeMapper extends JsonDeserializer<Person> {

@@ -1,5 +1,8 @@
 package com.xiaolyuh.service.impl;
 
+import com.xiaodonghong.CustomCacheEvict;
+import com.xiaodonghong.CustomCachePut;
+import com.xiaodonghong.CustomCacheable;
 import com.xiaolyuh.entity.Person;
 import com.xiaolyuh.repository.PersonRepository;
 import com.xiaolyuh.service.PersonService;
@@ -18,7 +21,7 @@ public class PersonServiceImpl implements PersonService {
     PersonRepository personRepository;
 
     @Override
-    @CachePut(value = "people", key = "#person.id")
+    @CustomCachePut(value = "custompeople", key = "#person.id")
     public Person save(Person person) {
         Person p = personRepository.save(person);
         System.out.println("为id、key为:" + p.getId() + "数据做了缓存");
@@ -26,14 +29,14 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    @CacheEvict(value = "people")//2
+    @CustomCacheEvict(value = "custompeople")//2
     public void remove(Long id) {
         System.out.println("删除了id、key为" + id + "的数据缓存");
         //这里不做实际删除操作
     }
 
     @Override
-    @Cacheable(value = "people", key = "#person.id")//3
+    @CustomCacheable(value = "custompeople", key = "#person.id")//3
     public Person findOne(Person person) {
         Optional<Person>  p = personRepository.findById(person.getId());
         System.out.println("为id、key为:" + person.getId() + "数据做了缓存");
@@ -41,7 +44,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    @Cacheable(value = "people", key = "#id")//3
+    @CustomCacheable(value = "custompeople", key = "#id")//3
     public Person findById(Long id) {
         Optional<Person> p = personRepository.findById(id);
         System.out.println("为id、key为:" + id + "数据做了缓存");
@@ -49,7 +52,7 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
-    @Cacheable(value = "peoples")//3
+    @CustomCacheable(value = "custompeoples")//3
     public List<Person> findAll() {
        return personRepository.findAll();
     }

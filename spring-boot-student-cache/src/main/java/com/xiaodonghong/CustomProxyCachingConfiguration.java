@@ -32,7 +32,9 @@ public class CustomProxyCachingConfiguration extends AbstractCachingConfiguratio
     public CustomBeanFactoryCacheOperationSourceAdvisor cacheAdvisor() {
         // TODO 注入拦截
         CustomBeanFactoryCacheOperationSourceAdvisor advisor = new CustomBeanFactoryCacheOperationSourceAdvisor();
+        //TODO 定义拦截注解
         advisor.setCacheOperationSource(cacheOperationSource());
+        //TODO 定义了 拦截处理
         advisor.setAdvice(cacheInterceptor());
         if (this.enableCaching != null) {
             advisor.setOrder(this.enableCaching.<Integer>getNumber("order"));
@@ -45,6 +47,7 @@ public class CustomProxyCachingConfiguration extends AbstractCachingConfiguratio
     @Bean
     @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
     public CacheOperationSource cacheOperationSource() {
+        // TODO 定义拦截和处理的注解信息。其中有一个 CustomSpringCacheAnnotationParser 用于定义拦截的接口，和处理拦截
         return new CustomAnnotationCacheOperationSource();
     }
 
@@ -59,13 +62,17 @@ public class CustomProxyCachingConfiguration extends AbstractCachingConfiguratio
     @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
     public CustomCacheInterceptor cacheInterceptor() {
         CustomCacheInterceptor interceptor = new CustomCacheInterceptor();
+        //TODO 设置错误处理， key生成机制， cacheresolver 缓存解析， 和 CacheManager，信息
+        // TODO 使用默认的errorHandler，SimpleKeyGenerator，
         interceptor.configure(this.errorHandler, this.keyGenerator, this.cacheResolver, this.cacheManager);
+        // TODO 拦截处理中，需要的拦截注解一起 其拦截信息
         interceptor.setCacheOperationSource(cacheOperationSource());
         return interceptor;
     }
 
     @Override
     public void setImportMetadata(AnnotationMetadata importMetadata) {
+        //TODO 定义了有这个注解才能生效缓存
         this.enableCaching = AnnotationAttributes.fromMap(
                 importMetadata.getAnnotationAttributes( CustomEnableCaching.class.getName(), false));
         if (this.enableCaching == null) {

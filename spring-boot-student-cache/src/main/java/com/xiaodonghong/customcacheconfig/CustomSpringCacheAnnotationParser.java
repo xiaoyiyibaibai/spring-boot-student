@@ -1,5 +1,9 @@
 package com.xiaodonghong.customcacheconfig;
 
+import com.xiaodonghong.CustomCacheEvict;
+import com.xiaodonghong.CustomCachePut;
+import com.xiaodonghong.CustomCacheable;
+import com.xiaodonghong.CustomCaching;
 import org.springframework.cache.annotation.*;
 import org.springframework.cache.interceptor.CacheEvictOperation;
 import org.springframework.cache.interceptor.CacheOperation;
@@ -28,25 +32,28 @@ public class CustomSpringCacheAnnotationParser implements CacheAnnotationParser 
     private static final Set<Class<? extends Annotation>> CACHE_OPERATION_ANNOTATIONS = new LinkedHashSet<>( 8 );
 
     static {
-        CACHE_OPERATION_ANNOTATIONS.add( Cacheable.class );
-        CACHE_OPERATION_ANNOTATIONS.add( CacheEvict.class );
-        CACHE_OPERATION_ANNOTATIONS.add( CachePut.class );
-        CACHE_OPERATION_ANNOTATIONS.add( Caching.class );
+        //TODO 设置拦截的类
+        CACHE_OPERATION_ANNOTATIONS.add( CustomCacheable.class );
+        CACHE_OPERATION_ANNOTATIONS.add( CustomCacheEvict.class );
+        CACHE_OPERATION_ANNOTATIONS.add( CustomCachePut.class );
+        CACHE_OPERATION_ANNOTATIONS.add( CustomCaching.class );
     }
 
+    //TODO 父类核心方法
     @Override
     @Nullable
     public Collection<CacheOperation> parseCacheAnnotations(Class<?> type) {
         DefaultCacheConfig defaultCacheConfig = new DefaultCacheConfig( type );
         return parseCacheAnnotations(defaultCacheConfig,type);
     }
-
+    //TODO 父类核心方法
     @Override
     @Nullable
     public Collection<CacheOperation> parseCacheAnnotations(Method method) {
         DefaultCacheConfig defaultCacheConfig = new DefaultCacheConfig( method.getDeclaringClass() );
         return parseCacheAnnotations(defaultCacheConfig,method);
     }
+
 
     @Nullable
     private Collection<CacheOperation> parseCacheAnnotations(DefaultCacheConfig cachingConfig, AnnotatedElement ae) {
@@ -72,20 +79,20 @@ public class CustomSpringCacheAnnotationParser implements CacheAnnotationParser 
         }
 
         final Collection<CacheOperation> ops = new ArrayList<>( 1 );
-        anns.stream().filter( ann -> ann instanceof Cacheable ).forEach(
-                ann -> ops.add(parseCacheableAnnotation(ae , cachingConfig, (Cacheable)ann)));
+        anns.stream().filter( ann -> ann instanceof CustomCacheable ).forEach(
+                ann -> ops.add(parseCacheableAnnotation(ae , cachingConfig, (CustomCacheable)ann)));
         anns.stream().filter( ann -> ann instanceof CacheEvict ).forEach(
-                ann -> ops.add(parseEvictAnnotation(ae , cachingConfig, (CacheEvict)ann)));
+                ann -> ops.add(parseEvictAnnotation(ae , cachingConfig, (CustomCacheEvict)ann)));
         anns.stream().filter( ann-> ann instanceof CachePut ).forEach(
-                ann-> ops.add(parsePutAnnotation( ae,cachingConfig,(CachePut) ann ))
+                ann-> ops.add(parsePutAnnotation( ae,cachingConfig,(CustomCachePut) ann ))
         );
-        anns.stream().filter(ann -> ann instanceof Caching).forEach(
-                ann -> parseCachingAnnotation(ae, cachingConfig, (Caching) ann, ops));
+        anns.stream().filter(ann -> ann instanceof CustomCaching ).forEach(
+                ann -> parseCachingAnnotation(ae, cachingConfig, (CustomCaching) ann, ops));
         return ops;
     }
 
     private CacheableOperation parseCacheableAnnotation(
-            AnnotatedElement ae, DefaultCacheConfig defaultConfig, Cacheable cacheable) {
+            AnnotatedElement ae, DefaultCacheConfig defaultConfig, CustomCacheable cacheable) {
 
         CacheableOperation.Builder builder = new CacheableOperation.Builder();
 
@@ -107,7 +114,7 @@ public class CustomSpringCacheAnnotationParser implements CacheAnnotationParser 
     }
 
     private CacheEvictOperation parseEvictAnnotation(
-            AnnotatedElement ae, DefaultCacheConfig defaultConfig, CacheEvict cacheEvict) {
+            AnnotatedElement ae, DefaultCacheConfig defaultConfig, CustomCacheEvict cacheEvict) {
         CacheEvictOperation.Builder builder = new CacheEvictOperation.Builder();
 
         builder.setName( ae.toString() );
@@ -125,7 +132,7 @@ public class CustomSpringCacheAnnotationParser implements CacheAnnotationParser 
         return op;
     }
 
-    private CacheOperation parsePutAnnotation(AnnotatedElement ae, DefaultCacheConfig defaultCacheConfig, CachePut cachePut) {
+    private CacheOperation parsePutAnnotation(AnnotatedElement ae, DefaultCacheConfig defaultCacheConfig, CustomCachePut cachePut) {
         CachePutOperation.Builder builder = new CachePutOperation.Builder();
         builder.setName( ae.toString() );
         builder.setCacheNames( cachePut.cacheNames() );
@@ -144,17 +151,17 @@ public class CustomSpringCacheAnnotationParser implements CacheAnnotationParser 
     }
 
     private void parseCachingAnnotation(
-            AnnotatedElement ae, DefaultCacheConfig defaultConfig, Caching caching, Collection<CacheOperation> ops) {
-        Cacheable [] cacheables = caching.cacheable();
-        for (Cacheable cacheable: cacheables){
+            AnnotatedElement ae, DefaultCacheConfig defaultConfig, CustomCaching caching, Collection<CacheOperation> ops) {
+        CustomCacheable [] cacheables = caching.cacheable();
+        for (CustomCacheable  cacheable: cacheables){
             ops.add( parseCacheableAnnotation( ae, defaultConfig, cacheable) );
         }
-        CacheEvict [] cacheEvicts = caching.evict();
-        for (CacheEvict cacheEvict: cacheEvicts){
+        CustomCacheEvict [] cacheEvicts = caching.evict();
+        for (CustomCacheEvict cacheEvict: cacheEvicts){
             ops.add( parseEvictAnnotation(ae, defaultConfig, cacheEvict));
         }
-        CachePut[] cachePuts = caching.put();
-        for (CachePut cachePut: cachePuts){
+        CustomCachePut[] cachePuts = caching.put();
+        for (CustomCachePut cachePut: cachePuts){
             ops.add(parsePutAnnotation(ae, defaultConfig, cachePut));
         }
     }
