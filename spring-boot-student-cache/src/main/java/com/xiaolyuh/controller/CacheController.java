@@ -43,19 +43,21 @@ public class CacheController {
     public List<Person> cacheables() {
         List<Person> personList2 = new ArrayList<>(  );
         List<Person> personList = personService.findAll();
-        for (Object temp:
-             personList) {
-            Long id;
-            if (temp instanceof HashMap){
-                HashMap hashMap = (HashMap)temp;
-                id = Long.valueOf(  (Integer) hashMap.get( "id" ) );
-            }else {
-                id = ((Person)temp).getId();
-            }
+        if(personList!=null) {
+            for (Object temp :
+                    personList) {
+                Long id;
+                if (temp instanceof HashMap) {
+                    HashMap hashMap = (HashMap) temp;
+                    id = Long.valueOf( (Integer) hashMap.get( "id" ) );
+                } else {
+                    id = ((Person) temp).getId();
+                }
 
-            Object person =  personService.findById( id);
-            if (person instanceof Person) {
-                personList2.add( (Person)person );
+                Object person = personService.findById( id );
+                if (person instanceof Person) {
+                    personList2.add( (Person) person );
+                }
             }
         }
         return  personList2;

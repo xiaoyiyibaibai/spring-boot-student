@@ -91,7 +91,28 @@ public class CustomSpringCacheAnnotationParser implements CacheAnnotationParser 
         return ops;
     }
 
-    private CustomCacheableOperation parseCacheableAnnotation(
+    private CacheableOperation parseCacheableAnnotation(
+            AnnotatedElement ae, DefaultCacheConfig defaultConfig, CustomCacheable cacheable) {
+
+        CacheableOperation.Builder builder = new CacheableOperation.Builder();
+
+        builder.setName(ae.toString());
+        builder.setCacheNames(cacheable.cacheNames());
+        builder.setCondition(cacheable.condition());
+        builder.setUnless(cacheable.unless());
+        builder.setKey(cacheable.key());
+        builder.setKeyGenerator(cacheable.keyGenerator());
+        builder.setCacheManager(cacheable.cacheManager());
+        builder.setCacheResolver(cacheable.cacheResolver());
+        builder.setSync(cacheable.sync());
+        defaultConfig.applyDefault(builder);
+        CacheableOperation op = builder.build();
+        validateCacheOperation(ae, op);
+
+        return op;
+    }
+
+    private CustomCacheableOperation parseCacheableAnnotation2(
             AnnotatedElement ae, DefaultCacheConfig defaultConfig, CustomCacheable cacheable) {
 
         CustomCacheableOperation.Builder builder = new CustomCacheableOperation.Builder();
@@ -113,7 +134,6 @@ public class CustomSpringCacheAnnotationParser implements CacheAnnotationParser 
 
         return op;
     }
-
     private CacheEvictOperation parseEvictAnnotation(
             AnnotatedElement ae, DefaultCacheConfig defaultConfig, CustomCacheEvict cacheEvict) {
         CacheEvictOperation.Builder builder = new CacheEvictOperation.Builder();
