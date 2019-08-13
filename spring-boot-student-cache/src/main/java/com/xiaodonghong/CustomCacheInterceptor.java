@@ -1,11 +1,10 @@
 package com.xiaodonghong;
 
-import com.xiaodonghong.customcacheconfig.CacheAspectSupport;
+import com.xiaodonghong.interceptor.AbstractCustomCacheAspectSupport;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.cache.interceptor.*;
 import org.springframework.lang.Nullable;
-
 
 import java.io.Serializable;
 import java.lang.reflect.Method;
@@ -16,7 +15,7 @@ import java.lang.reflect.Method;
  * @Author renhao
  * @Date 2019/7/29 10:43
  **/
-public class CustomCacheInterceptor extends CacheAspectSupport implements MethodInterceptor, Serializable {
+public class CustomCacheInterceptor extends AbstractCustomCacheAspectSupport implements MethodInterceptor, Serializable {
 
     private boolean initialized = false;
     @Override

@@ -59,70 +59,15 @@
 	</build>
 
 	<modules>
-		<!-- 设置Spring Boot启动Banner -->
-		<module>spring-boot-student-banner</module>
 		<!-- Spring Boot 读取配置文件 -->
 		<module>spring-boot-student-config</module>
-		<!-- Spring Boot启Banner 日志配置 -->
-		<module>spring-boot-student-log</module>
-		<!-- Spring Boot profile配置 -->
-		<module>spring-boot-student-profile</module>
-		<!-- Spring Boot 使用data-jpa操作数据库 -->
-		<module>spring-boot-student-data-jpa</module>
-		<!-- Spring Boot 使用Mybatis操作数据库 -->
-		<module>spring-boot-student-mybatis</module>
-		<!-- Spring Boot 使用ehcache作为Mybatis的二级缓存 -->
-		<module>spring-boot-student-mybatis-ehcache</module>
-		<!-- Spring Boot 使用redis作为Mybatis的二级缓存 -->
-		<module>spring-boot-student-mybatis-redis</module>
-		<!-- Spring Boot 使用druid连接池连接数据库（自己定制） -->
-		<module>spring-boot-student-mybatis-druid</module>
-		<!-- Spring Boot JAVA中常用的加密算法 -->
-		<module>spring-boot-student-encode</module>
-		<!-- Spring Boot 使用druid连接池连接数据库（官方start） -->
-		<module>spring-boot-student-mybatis-druid-2</module>
-		<!-- Spring Boot Spring事务管理 -->
 		<module>spring-boot-student-data-jpa-transaction</module>
 		<!-- Spring Boot Spring 缓存 -->
 		<module>spring-boot-student-cache</module>
-		<!-- Spring Boot 使用 ehcache作为 Spring 缓存 -->
-		<module>spring-boot-student-cache-ehcache</module>
 		<!-- Spring Boot 使用 redis作为 Spring 缓存（自动刷新缓存） -->
 		<module>spring-boot-student-cache-redis</module>
 		<!-- Spring Boot 使用 redis作为 Spring 缓存（自动刷新缓存2） -->
 		<module>spring-boot-student-cache-redis-2</module>
-		<!-- Spring Boot 使用 caffeine作为 Spring 缓存 -->
-		<module>spring-boot-student-cache-caffeine</module>
-		<!-- 基于redis + caffeine实现的多级缓存 -->
-		<module>spring-boot-student-cache-redis-caffeine</module>	
-		<!-- Spring Boot 使用Spring data mongo 操作mongodb数据库 -->
-		<module>spring-boot-student-data-mongo</module>
-		<!-- Spring Boot 使用Spring data redis 操作redis数据库 -->
-		<module>spring-boot-student-data-redis</module>
-		<!-- 基于redis实现的分布式锁 -->
-		<module>spring-boot-student-data-redis-distributed-lock</module>		
-		<!-- drools规则引擎入门 -->
-		<module>spring-boot-student-drools</module>	
-		<!-- 基于redis实现的扣减库存 -->
-		<module>spring-boot-student-stock-redis</module>
-		<!-- Spring Boot RabbitMQ 实践 -->
-		<module>spring-boot-student-rabbitmq</module>
-		<!-- Spring Boot 监控 -->
-		<module>spring-boot-student-monitor</module>		
-		<!-- Spring Boot 参数校验 -->
-		<module>spring-boot-student-validated</module>
-		<!-- Spring Boot guava-retrying 重试机制 -->
-		<module>spring-boot-student-guava-retrying</module>
-		<!-- Spring Boot spring-retry 重试机制 -->
-		<module>spring-boot-student-spring-retry</module>
-		<!-- Spring Boot 多级缓存测试 -->
-		<module>spring-boot-student-layering-cache</module>
-		<!-- Spring Boot hystrix -->
-		<module>spring-boot-student-hystrix</module>
-		<!-- Spring Boot CompletableFuture -->
-		<module>spring-boot-student-completable-future</module>
-		<!-- mybatis-plus  -->
-		<module>spring-boot-student-mybatis-plus</module>
 		<!-- 并发编程  -->
 		<module>spring-boot-student-concurrent</module>
     </modules>

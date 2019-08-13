@@ -1,11 +1,8 @@
 package com.xiaodonghong;
 
-import com.xiaodonghong.CustomCacheInterceptor;
-import com.xiaodonghong.customcacheconfig.CustomBeanFactoryCacheOperationSourceAdvisor;
-import com.xiaodonghong.domain.CustomAnnotationCacheOperationSource;
+import com.xiaodonghong.annotations.CustomEnableCaching;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.cache.annotation.AbstractCachingConfiguration;
-import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.cache.config.CacheManagementConfigUtils;
 import org.springframework.cache.interceptor.BeanFactoryCacheOperationSourceAdvisor;
 import org.springframework.cache.interceptor.CacheOperationSource;
@@ -14,8 +11,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Role;
 import org.springframework.core.annotation.AnnotationAttributes;
 import org.springframework.core.type.AnnotationMetadata;
-
-import java.util.HashMap;
 
 /**
  * @ClassName CustomProxyCachingConfiguration
@@ -29,9 +24,9 @@ public class CustomProxyCachingConfiguration extends AbstractCachingConfiguratio
 
     @Bean(name = CacheManagementConfigUtils.CACHE_ADVISOR_BEAN_NAME)
     @Role(BeanDefinition.ROLE_INFRASTRUCTURE)
-    public CustomBeanFactoryCacheOperationSourceAdvisor cacheAdvisor() {
+    public BeanFactoryCacheOperationSourceAdvisor cacheAdvisor() {
         // TODO 注入拦截
-        CustomBeanFactoryCacheOperationSourceAdvisor advisor = new CustomBeanFactoryCacheOperationSourceAdvisor();
+        BeanFactoryCacheOperationSourceAdvisor advisor = new BeanFactoryCacheOperationSourceAdvisor();
         //TODO 定义拦截注解
         advisor.setCacheOperationSource(cacheOperationSource());
         //TODO 定义了 拦截处理

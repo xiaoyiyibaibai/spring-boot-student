@@ -1,15 +1,12 @@
 package com.xiaolyuh.service.impl;
 
-import com.xiaodonghong.CustomCacheEvict;
-import com.xiaodonghong.CustomCachePut;
-import com.xiaodonghong.CustomCacheable;
+import com.xiaodonghong.annotations.CustomCacheEvict;
+import com.xiaodonghong.annotations.CustomCachePut;
+import com.xiaodonghong.annotations.CustomCacheable;
 import com.xiaolyuh.entity.Person;
 import com.xiaolyuh.repository.PersonRepository;
 import com.xiaolyuh.service.PersonService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
