@@ -1,6 +1,6 @@
 package com.xiaodonghong;
 
-import com.xiaodonghong.interceptor.AbstractCustomCacheAspectSupport;
+import com.xiaodonghong.aspectsupport.AbstractCustomCacheAspectSupport;
 import org.aopalliance.intercept.MethodInterceptor;
 import org.aopalliance.intercept.MethodInvocation;
 import org.springframework.cache.interceptor.*;

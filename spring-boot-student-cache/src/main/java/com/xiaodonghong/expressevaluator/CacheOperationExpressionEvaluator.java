@@ -44,7 +44,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Stephane Nicoll
  * @since 3.1
  */
-public class CacheOperationExpressionEvaluator extends CachedExpressionEvaluator {
+class CacheOperationExpressionEvaluator extends CachedExpressionEvaluator {
 
 	/**
 	 * Indicate that there is no result variable.

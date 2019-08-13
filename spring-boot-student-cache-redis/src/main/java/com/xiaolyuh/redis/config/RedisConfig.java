@@ -79,7 +79,7 @@ public class RedisConfig {
      */
     @Bean
     public RedisCacheManager cacheManager(RedisTemplate<String, Object> redisTemplate) {
-        RedisCacheManager redisCacheManager = new CustomizedRedisCacheManager(redisTemplate);
+        CustomizedRedisCacheManager redisCacheManager = new CustomizedRedisCacheManager(redisTemplate);
         redisCacheManager.setUsePrefix(true);
         //这里可以设置一个默认的过期时间 单位是秒
         redisCacheManager.setDefaultExpiration(redisDefaultExpiration);

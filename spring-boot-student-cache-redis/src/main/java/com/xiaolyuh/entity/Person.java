@@ -3,15 +3,13 @@ package com.xiaolyuh.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 import java.io.Serializable;
 
 @Entity // @Entity注解指明这是一个和数据库表映射的实体类。
-@NamedQuery(name = "Person.withNameAndAddressNamedQuery", query = "select p from Person p where p.name=?1 and address=?2")
+@Table(name = "person")
 public class Person implements Serializable {
-    private static final long serialVersionUID = -2830939627085135084L;
-
-    @Id // @Id注解指明这个属性映射为数据库的主键。
+	@Id // @Id注解指明这个属性映射为数据库的主键。
 	@GeneratedValue // @GeneratedValue注解默认使用主键生成方式为自增，hibernate会为我们自动生成一个名为HIBERNATE_SEQUENCE的序列。
 	private Long id;
 
