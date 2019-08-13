@@ -16,9 +16,7 @@
 
 package com.xiaodonghong.operations;
 
-import org.springframework.cache.interceptor.CacheOperation;
 import org.springframework.cache.interceptor.CacheableOperation;
-import org.springframework.lang.Nullable;
 
 /**
  * Class describing a cache 'cacheable' operation.
@@ -28,12 +26,7 @@ import org.springframework.lang.Nullable;
  * @author Marcin Kamionowski
  * @since 3.1
  */
-public class CustomCacheableOperation extends CacheOperation {
-
-    @Nullable
-    private final String unless;
-
-    private final boolean sync;
+public class CustomCacheableOperation extends CacheableOperation {
 
     private final int refreshTimes;
 
@@ -41,19 +34,8 @@ public class CustomCacheableOperation extends CacheOperation {
 
     public CustomCacheableOperation(CustomCacheableOperation.Builder b) {
         super( b );
-        this.unless = b.unless;
-        this.sync = b.sync;
         this.refreshTimes = b.refreshTimes;
         this.ttl = b.ttl;
-    }
-
-    @Nullable
-    public String getUnless() {
-        return this.unless;
-    }
-
-    public boolean isSync() {
-        return this.sync;
     }
 
     public int getRefreshTimes(){
@@ -68,22 +50,12 @@ public class CustomCacheableOperation extends CacheOperation {
      *
      * @since 4.3
      */
-    public static class Builder extends CacheOperation.Builder {
+    public static class Builder extends CacheableOperation.Builder {
 
-        @Nullable
-        private String unless;
-
-        private boolean sync;
         private int refreshTimes;
         private int ttl;
 
-        public void setUnless(String unless) {
-            this.unless = unless;
-        }
 
-        public void setSync(boolean sync) {
-            this.sync = sync;
-        }
 
         public void setRefreshTimes(int refreshTimes) {
             this.refreshTimes = refreshTimes;
@@ -96,12 +68,6 @@ public class CustomCacheableOperation extends CacheOperation {
         @Override
         protected StringBuilder getOperationDescription() {
             StringBuilder sb = super.getOperationDescription();
-            sb.append( " | unless='" );
-            sb.append( this.unless );
-            sb.append( "'" );
-            sb.append( " | sync='" );
-            sb.append( this.sync );
-            sb.append( "'" );
             sb.append( " | refreshTimes='" );
             sb.append( this.refreshTimes );
             sb.append( "'" );

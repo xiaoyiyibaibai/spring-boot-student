@@ -91,10 +91,10 @@ public class CustomSpringCacheAnnotationParser implements CacheAnnotationParser 
         return ops;
     }
 
-    private CacheableOperation parseCacheableAnnotation(
+    private CustomCacheableOperation parseCacheableAnnotation(
             AnnotatedElement ae, DefaultCacheConfig defaultConfig, CustomCacheable cacheable) {
 
-        CacheableOperation.Builder builder = new CacheableOperation.Builder();
+        CustomCacheableOperation.Builder builder = new CustomCacheableOperation.Builder();
 
         builder.setName(ae.toString());
         builder.setCacheNames(cacheable.cacheNames());
@@ -105,10 +105,10 @@ public class CustomSpringCacheAnnotationParser implements CacheAnnotationParser 
         builder.setCacheManager(cacheable.cacheManager());
         builder.setCacheResolver(cacheable.cacheResolver());
         builder.setSync(cacheable.sync());
-//        builder.setRefreshTimes( cacheable.refreshTimes() );
-//        builder.setTtl( cacheable.ttl() );
+        builder.setRefreshTimes( cacheable.refreshTimes() );
+        builder.setTtl( cacheable.ttl() );
         defaultConfig.applyDefault(builder);
-        CacheableOperation op = builder.build();
+        CustomCacheableOperation op = builder.build();
         validateCacheOperation(ae, op);
 
         return op;

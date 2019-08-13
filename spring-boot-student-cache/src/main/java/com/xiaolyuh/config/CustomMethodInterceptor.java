@@ -17,6 +17,6 @@ public class CustomMethodInterceptor implements MethodInterceptor, Serializable 
     @Override
     public Object invoke(MethodInvocation invocation) throws Throwable {
         System.out.println("myClass="+CustomMethodInterceptor.class.getClass());
-        return null;
+        return invocation.proceed();
     }
 }
