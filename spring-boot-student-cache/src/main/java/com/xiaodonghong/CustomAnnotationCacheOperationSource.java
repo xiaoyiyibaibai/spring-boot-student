@@ -63,7 +63,7 @@ public class CustomAnnotationCacheOperationSource extends AbstractFallbackCacheO
     }
 
     @Nullable
-    protected Collection<CacheOperation> determineCacheOperations(CustomAnnotationCacheOperationSource.CacheOperationProvider provider) {
+    protected Collection<CacheOperation> determineCacheOperations(CacheOperationProvider provider) {
       Collection<CacheOperation> ops = null;
       for (CacheAnnotationParser annotationParser: this.annotationParsers){
           Collection<CacheOperation> annOps = provider.getCacheOperations( annotationParser );

@@ -202,6 +202,7 @@ public abstract class AbstractCustomCacheAspectSupport extends CacheAspectSuppor
         for (CacheOperationContext context : contexts) {
             if (isConditionPassing(context, result)) {
                 Object key = generateKey(context, result);
+                // TODO 获得key，获得CacheOperationContext 。然后根据CacheOperationContext.getCaches() 获取Cache，遍历Cache，获取值 Cache.ValueWrapper
                 Cache.ValueWrapper cached = findInCaches(context, key);
                 if (cached != null) {
                     return cached;
@@ -286,8 +287,15 @@ public abstract class AbstractCustomCacheAspectSupport extends CacheAspectSuppor
         }
         return passing;
     }
-
+/**
+ * @Author xiaodongohong
+ * @Description 获取key对应的数值，用于取Cache中取数据
+ * @Date 19:22 2019/8/13
+ * @Param [context, result]
+ * @return java.lang.Object
+ **/
     private Object generateKey(CacheOperationContext context, @Nullable Object result) {
+        // 获取key对应的数值，用于取Cache中取数据
         Object key = context.generateKey(result);
         if (key == null) {
             throw new IllegalArgumentException("Null key returned for cache operation (maybe you are " +
@@ -344,7 +352,7 @@ public abstract class AbstractCustomCacheAspectSupport extends CacheAspectSuppor
         CacheOperationMetadata metadata = getCacheOperationMetadata2(operation, method, targetClass);
         return new CacheOperationContext(metadata, args, target);
     }
-
+   //TODO 根据CacheOperationCacheKey，保存CacheOperationMetadata
     protected  CacheOperationMetadata getCacheOperationMetadata2(
             CacheOperation operation, Method method, Class<?> targetClass) {
 
